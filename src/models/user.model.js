@@ -29,8 +29,18 @@ const userSchema = new Schema({
         }, "El seguro de buceo es obligatorio para particulares"]
     },
     telefono: {type: String, required: true },    
-    edad: {type: Number, required: true},    
+    edad: {type: Number},    
     email: {type: String, required: true, unique: true},
+    certificadoActividades: {type: String},
+    // Empresas
+    CIF: {type: String},
+    nombreEmpresa: {type: String},
+    responsabeEmpresa: {type: String},
+    estadoDocumentacion: 
+        {type: String,
+            default: "pendiente",    
+            enum: ["pendiente", "pendiente revisar", "aprobada", "anulado", "rechazado"],     
+        },
 
 
 });
