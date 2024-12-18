@@ -1,6 +1,6 @@
 const  express = require('express');
 const morgan = require('morgan')
-const userRouters = require('./src/routes/clientes.route')
+const clienteRoutes = require('./src/routes/clientes.route')
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use( (req, res, next)  => {
     next()
 })
 
-app.use('/clientes', userRouters)
+app.use('/clientes', clienteRoutes)
 
 // Se crea peticion .get de prueba para ver si funciona. 
 app.get('/', (req, res)=> {

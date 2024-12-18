@@ -15,11 +15,6 @@ const clienteSchema = new Schema({
     tipoCliente: {type: String, enum: ['Particular', 'Empresa', 'Club']},
 });
 
-clienteSchema.methods.validateCliente = async function(req){
-    
-    console.log('Validando cliente...');
-    console.log(req.body);
-}
 
 const cliente = mongoose.model("Cliente", clienteSchema);
 module.exports = cliente;

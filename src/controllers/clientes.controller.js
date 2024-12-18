@@ -1,10 +1,18 @@
 const Cliente = require('../models/clientes.model');
+const {validateClient} = require('../utils/validator');
 
 const nuevoCliente = async (req, res) => {
 
-    Cliente.validateCliente(req);
+
 
     try {
+
+        const validClient = await validateClient(req.body);
+
+        if (validClient.error) {
+            return res.status(400).json(validClient.message);
+        }
+    
         const nuevoCliente = new Cliente(req.body);
         const clienteCreado = await nuevoCliente.save();
         return res.status(201).json(clienteCreado);            
