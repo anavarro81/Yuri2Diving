@@ -10,7 +10,7 @@ const nuevoCliente = async (req, res) => {
         const validClient = await validateClient(req.body);
 
         if (validClient.error) {
-            return res.status(400).json(validClient.message);
+            return res.status(400).json(validClient);
         }
     
         const nuevoCliente = new Cliente(req.body);

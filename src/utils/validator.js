@@ -175,17 +175,17 @@ const validatePrivateCustomer = (customer) => {
 
     const ValidfullName = validateFullName(fullName);
     if (ValidfullName.error) {
-        return false
+        return ValidfullName
     }
 
     const Validphone = validatePhone(phone);
     if (Validphone.error) {
-        return phone;
+        return Validphone;
     }
 
     const Validemail = validateEmail(email);
     if (Validemail.error) {
-        return email;
+        return Validemail;
     }
 
     const document = validateDocument(documentation, ClientType);
