@@ -48,7 +48,7 @@ const validatePhone = async (phone) => {
     if (usedPhone.length > 0) {
         return {
             error: true,
-            message: 'phone ya registrado'}
+            message: 'telefono ya registrado'}
     }
 
     return {error: false, message: 'phone validated'}
