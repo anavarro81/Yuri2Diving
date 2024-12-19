@@ -2,17 +2,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const clienteSchema = new Schema({
-    nombreApellidos: {type: String},
-    telefono: {type:String},
-    correo: {type:String},
-    documentacion: [
+    fullName: {type: String},
+    
+    // Empresas
+    responsable: {type: String},
+    nombreComercial: {type: String},
+    
+    phone: {type:String},
+    email: {type:String},
+    documentation: [
         {
             tipo: {type: String, enum: ['DNI', 'CIF', 'TituloBuceo', 'SeguroBuceo'] },
             url_documento: {type: String},
         }
     ],
-    validado: {type: Boolean, default: false},
-    tipoCliente: {type: String, enum: ['Particular', 'Empresa', 'Club']},
+    validated: {type: Boolean, default: false},
+    ClientType: {type: String, enum: ['Particular', 'Empresa', 'Club']},
 });
 
 

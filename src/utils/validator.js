@@ -14,7 +14,11 @@ const validateFullName = (fullName) => {
             message: 'El nombre y apellidos deben tener al menos 10 caracteres'}
     }
 
-    return {error: false, message: 'nombre y apellidos validados'}
+    return {error: false, message: 'nombre y apellidos validateds'}
+
+}
+
+const validateManager = (manager) => {
 
 }
 
@@ -23,7 +27,7 @@ const validatePhone = async (phone) => {
     if (!phone) {
         return {
             error: true,
-            message: 'El telefono es obligatorio'}
+            message: 'El phone es obligatorio'}
     }
 
     const phoneRegex = /^\+?[1-9]\d{1,14}$/;
@@ -32,20 +36,20 @@ const validatePhone = async (phone) => {
     if (!phoneRegex.test(phone)) {
         return {
             error: true,
-            message: 'Telefono no valido'}
+            message: 'phone no valido'}
     }
 
-    const usedPhone = await Cliente.find({telefono: phone});
+    const usedPhone = await Cliente.find({phone: phone});
 
     
 
     if (usedPhone.length > 0) {
         return {
             error: true,
-            message: 'Telefono ya registrado'}
+            message: 'phone ya registrado'}
     }
 
-    return {error: false, message: 'Telefono validado'}
+    return {error: false, message: 'phone validated'}
 }
 
 const validateEmail = (email) => {
@@ -53,27 +57,27 @@ const validateEmail = (email) => {
     if (!email) {
         return {
             error: true,
-            message: 'El correo es obligatorio'}
+            message: 'El email es obligatorio'}
     }
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     
-    // Valida que el correo sea un correo valido
+    // Valida que el correo sea un email valido
     if (!emailRegex.test(email)) {
         return {
             error: true,
-            message: 'Correo no valido'}
+            message: 'email no valido'}
     }
 
-    const usedEmail = Cliente.find({correo: email});
+    const usedEmail = Cliente.find({email: email});
 
     if (usedEmail.length > 0) {
         return {
             error: true,
-            message: 'Correo ya registrado'}
+            message: 'email ya registrado'}
     }
 
-    return {error: false, message: 'Correo validado'}
+    return {error: false, message: 'email validated'}
 }
 
 const validatePrivateDoc = (document) => {
@@ -124,24 +128,24 @@ const validatePrivateDoc = (document) => {
 }
 
 const validateCompanyDoc = (document) => {
-    console.log('Validando documentacion de empresa');
+    console.log('Validando documentation de empresa');
 }
 
 const validateClubDoc = (document) => { 
-    console.log('Validando documentacion de club');
+    console.log('Validando documentation de club');
 }
 
 
 
-const validateDocument = (document, tipoCliente) => {
+const validateDocument = (document, ClientType) => {
     
     if (document.length == 0) {
         return {
             error: true,
-            message: 'La documentacion es obligatoria'}
+            message: 'La documentation es obligatoria'}
     }
 
-    switch (tipoCliente) {
+    switch (ClientType) {
         case 'Particular':
             validatePrivateDoc(document);
         case 'Empresa':
@@ -162,34 +166,77 @@ const validateDocument = (document, tipoCliente) => {
 
     
 
-    return {error: false, message: 'Documento validado'}
+    return {error: false, message: 'Documento validated'}
 }
 
-const validateClient = async (client) => {
+const validatePrivateCustomer = (customer) => {
     
-    const {nombreApellidos, telefono, correo, documentacion, tipoCliente} = client;
+    const {fullName, phone, email, documentation, ClientType} = customer;
 
-    const fullName = validateFullName(nombreApellidos);
-    if (fullName.error) {
+    const ValidfullName = validateFullName(fullName);
+    if (ValidfullName.error) {
         return false
     }
 
-    const phone = validatePhone(telefono);
-    if (phone.error) {
+    const Validphone = validatePhone(phone);
+    if (Validphone.error) {
         return phone;
     }
 
-    const email = validateEmail(correo);
-    if (email.error) {
+    const Validemail = validateEmail(email);
+    if (Validemail.error) {
         return email;
     }
 
-    const document = validateDocument(documentacion, tipoCliente);
+    const document = validateDocument(documentation, ClientType);
     if (document.error) {
         return document;
     }
 
-    return {error: false, message: 'Cliente validado'}
+    return {error: false, message: 'Cliente validated'}
+}
+
+const validateCompany = (company) => {
+
+    const {responsable, nombreComercial, phone, email, documentation} = company;
+
+    const manager = validateManager(fullName);
+    if (fullName.error) {
+        return false
+    }
+
+
+}
+
+const validateClub = (club) => {
+}
+
+const validateClient = async (client) => {   
+    
+    
+    const {ClientType} = client;
+
+    let validClient;     
+
+    switch (ClientType) {  
+        case 'Particular':
+            validClient = validatePrivateCustomer(client);            
+            break;
+        case 'Empresa':
+            validClient = validateCompany(client);
+            break;
+        case 'Club':
+            validClient = validateClub(client);
+            break;
+        default:
+            return {
+                error: true,
+                message: 'Tipo de cliente no valido'}   
+    }
+
+    return validClient;
+
+
 }
 
 module.exports = {validateClient}; 
