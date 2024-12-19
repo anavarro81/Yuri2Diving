@@ -30,10 +30,12 @@ const validatePhone = async (phone) => {
             message: 'El phone es obligatorio'}
     }
 
-    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
     
-    // Valida que el telefono sea un numero valido. Incluye el signo + y hasta 14 digitos
-    if (!phoneRegex.test(phone)) {
+    const euPhoneRegex = /^\+\d{2}\d{9,11}$/;
+    
+    // Valida que el telefono sea un numero valido de la UE. 
+    // Ejemplo: +34666777888
+    if (!euPhoneRegex.test(phone)) {
         return {
             error: true,
             message: 'phone no valido'}
@@ -137,7 +139,7 @@ const validateClubDoc = (document) => {
 
 
 
-const validateDocument = (document, ClientType) => {
+const validateDocument =  (document, ClientType) => {
     
     if (document.length == 0) {
         return {
@@ -169,7 +171,7 @@ const validateDocument = (document, ClientType) => {
     return {error: false, message: 'Documento validated'}
 }
 
-const validatePrivateCustomer = (customer) => {
+const validatePrivateCustomer = async (customer) => {
     
     const {fullName, phone, email, documentation, ClientType} = customer;
 
@@ -178,7 +180,7 @@ const validatePrivateCustomer = (customer) => {
         return ValidfullName
     }
 
-    const Validphone = validatePhone(phone);
+    const Validphone =  await validatePhone(phone);
     if (Validphone.error) {
         return Validphone;
     }
