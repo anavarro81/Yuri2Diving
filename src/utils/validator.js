@@ -1,5 +1,15 @@
 const Cliente = require('../models/clientes.model');
 
+
+// ****************************************************** 
+// validateFullName > Valida el nombre completo para particulares. 
+// validateManager > Valida el nombre del responsable para empresas
+// validateCompanyName > Valida el nombre de la compañia
+// validatePhone > valida el numero de teléfono
+// 
+// ******************************************************** 
+
+
 const validateFullName = (fullName) => {
     
     if (!fullName) {
@@ -20,7 +30,41 @@ const validateFullName = (fullName) => {
 
 const validateManager = (manager) => {
 
+    if (!manager) {
+        return {
+            error: true,
+            message: 'El nombre del responsable es obligatorio'}
+    }
+
+    if (manager.length < 10) {
+        return {
+            error: true,
+            message: 'El nombre del manager tiene que tener al menos 10 caracteres'}
+    }
+
+    return {error: false, message: 'nombre del respnsable validador'}
+
+
 }
+
+const validateCompanyName = (companyName) => {
+
+    if (!companyName) {
+        return {
+            error: true,
+            message: 'El nombre de la empresa es obligatorio'}
+    }
+
+    if (companyName.length < 10) {
+        return {
+            error: true,
+            message: 'El nombre de la empresa tiene que tener al menos 10 caracteres'}
+    }
+
+    return {error: false, message: 'nombre del respnsable validador'}
+
+}
+
 
 const validatePhone = async (phone) => {
     
@@ -54,7 +98,7 @@ const validatePhone = async (phone) => {
     return {error: false, message: 'phone validated'}
 }
 
-const validateEmail = (email) => {
+const validateEmail = async (email) => {
     
     if (!email) {
         return {
@@ -71,7 +115,7 @@ const validateEmail = (email) => {
             message: 'email no valido'}
     }
 
-    const usedEmail = Cliente.find({email: email});
+    const usedEmail = await Cliente.find({email: email});
 
     if (usedEmail.length > 0) {
         return {
@@ -198,15 +242,37 @@ const validatePrivateCustomer = async (customer) => {
     return {error: false, message: 'Cliente validated'}
 }
 
-const validateCompany = (company) => {
+const validateCompany = async (company) => {
 
-    const {responsable, nombreComercial, phone, email, documentation} = company;
+    const {manager, companyName, phone, email, documentation, ClientType} = company;
 
-    const manager = validateManager(fullName);
-    if (fullName.error) {
-        return false
+    const Validmanager = validateManager(manager);
+    if (Validmanager.error) {
+        return Validmanager
     }
 
+    const validCompanyName = validateCompanyName(companyName)
+
+    if(validCompanyName.error) {    
+        return Validmanager
+    }
+
+    const Validphone =  await validatePhone(phone);
+    if (Validphone.error) {
+        return Validphone;
+    }
+
+    const Validemail = validateEmail(email);
+    if (Validemail.error) {
+        return Validemail;
+    }
+
+    const document = validateDocument(documentation, ClientType);
+    if (document.error) {
+        return document;
+    }
+
+    return {error: false, message: 'Empresa validada'}
 
 }
 

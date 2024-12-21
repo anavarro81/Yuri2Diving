@@ -5,14 +5,14 @@ const clienteSchema = new Schema({
     fullName: {type: String},
     
     // Empresas
-    responsable: {type: String},
-    nombreComercial: {type: String},
+    manager: {type: String},
+    companyName: {type: String},
     
     phone: {type:String},
     email: {type:String},
     documentation: [
         {
-            tipo: {type: String, enum: ['DNI', 'CIF', 'TituloBuceo', 'SeguroBuceo'] },
+            tipo: {type: String, enum: ['DNI', 'CIF', 'TituloBuceo', 'SeguroBuceo', 'CertificadoActividades'] },
             url_documento: {type: String},
         }
     ],
