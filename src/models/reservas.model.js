@@ -2,26 +2,26 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const reservaSchema = new Schema({
-    fecha: { type: Date, required: true },
-    servicio: { 
+const bookingSchema = new Schema({
+    bookingDate: { type: Date, required: true },
+    service: { 
         type: Schema.Types.ObjectId, 
         ref: 'Servicio', 
         required: true 
     },
-    cliente: { 
+    customers: { 
         type: Schema.Types.ObjectId, 
         ref: 'User', 
         required: true 
     },
-    estado: { 
+    status: { 
         type: String, 
         default: "pendiente de pago", 
         enum: ["pendiente", "confirmada", "anulada", "rechazada", "confirmada"] 
     },
-    fechaTopePago: { type: Date, required: true },
+    requestDate: { type: Date, required: true },
  });
 
-const reserva = mongoose.model("Reserva", reservaSchema);
+const booking = mongoose.model("Booking", bookingSchema);
 
-module.exports = reserva;
+module.exports = booking;

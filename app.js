@@ -21,6 +21,7 @@ app.use( (req, res, next)  => {
 })
 
 app.use('/clientes', clienteRoutes)
+app.use(('/servicios/'))
 
 // Se crea peticion .get de prueba para ver si funciona. 
 app.get('/', (req, res)=> {
