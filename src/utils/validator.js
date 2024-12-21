@@ -42,7 +42,7 @@ const validateManager = (manager) => {
             message: 'El nombre del manager tiene que tener al menos 10 caracteres'}
     }
 
-    return {error: false, message: 'nombre del respnsable validador'}
+    return {error: false, message: 'manager correcto'}
 
 
 }
@@ -317,7 +317,7 @@ const validateCompany = async (company) => {
     const validCompanyName = validateCompanyName(companyName)
 
     if(validCompanyName.error) {    
-        return Validmanager
+        return validCompanyName
     }
 
     const Validphone =  await validatePhone(phone);
