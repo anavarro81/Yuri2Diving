@@ -5,6 +5,7 @@ const clienteSchema = new Schema({
     fullName: {type: String},
     
     // Empresas
+    CIF: {type: String},
     manager: {type: String},
     companyName: {type: String},
     

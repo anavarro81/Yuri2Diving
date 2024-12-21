@@ -181,7 +181,65 @@ const validateClubDoc = (document) => {
     console.log('Validando documentation de club');
 }
 
+// ******************************************************
+// VALIDACIONES PARA EMPRESAS                           *
+// ******************************************************
 
+const validateCIF = (CIF) => {
+    
+    if(!CIF) {
+        return {
+            error: true,
+            message: 'El CIF es obligatorio'}
+    }
+
+    if (CIF.length != 9) {
+        return {
+            error: true,
+            message: 'El CIF debe tener 9 caracteres'}
+    }
+
+    const cifRegex = /^[ABCDEFGHJUVNPQRSW]\d{7}[0-9A-J]$/;
+    if (!cifRegex.test(CIF)) {
+        return {
+            error: true,
+            message: 'El CIF no es valido'}
+    }
+
+    // Validar el dígito de control
+    const letters = 'ABCDEFGHJUVNPQRSW';
+    const controlLetters = 'JABCDEFGHI';
+    const digits = CIF.slice(1, -1);
+    const controlChar = CIF.slice(-1);
+    const firstLetter = CIF[0];
+
+    let sum = 0;
+    for (let i = 0; i < digits.length; i++) {
+        let num = parseInt(digits[i], 10);
+        if (i % 2 === 0) {
+            num *= 2;
+            if (num > 9) {
+                num -= 9;
+            }
+        }
+        sum += num;
+    }
+
+    const controlDigit = (10 - (sum % 10)) % 10;
+    const expectedControlChar = letters.includes(firstLetter) ? controlLetters[controlDigit] : controlDigit.toString();
+
+    if (controlChar !== expectedControlChar) {
+        return {
+            error: true,
+            message: 'El CIF no es válido'
+        };
+    }
+
+    return { error: false, message: 'CIF validado' };
+
+
+
+}
 
 const validateDocument =  (document, ClientType) => {
     
@@ -244,8 +302,13 @@ const validatePrivateCustomer = async (customer) => {
 
 const validateCompany = async (company) => {
 
-    const {manager, companyName, phone, email, documentation, ClientType} = company;
+    const {CIF, manager, companyName, phone, email, documentation, ClientType} = company;
 
+    const validCIF = validateCIF(CIF);
+    if (validCIF.error) {
+        return validCIF
+    }
+    
     const Validmanager = validateManager(manager);
     if (Validmanager.error) {
         return Validmanager
