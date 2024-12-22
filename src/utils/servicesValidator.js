@@ -25,7 +25,7 @@ const validateServiceName = (serviceName) => {
 
 }
 
-const description = (description) => {
+const validatedescription = (description) => {
     
     if (!description) {
         return {
@@ -38,9 +38,11 @@ const description = (description) => {
             error: true,
             message: 'La descripción del servicio debe tener al menos 10 caracteres'}
     }
+
+    return {error: false, message: ''}
 }
 
-const customerType = (customerType) => {
+const validatecustomerType = (customerType) => {
     
     if (!customerType) {
         return {
@@ -64,11 +66,11 @@ const validateService = (service) => {
             description, 
             customerType} = service;
     
-    // Las funciones se ejecutan y se almacenan en el array
+// Las funciones de validacion se ejecutan y se almacenan en el resultado en result
     const validation = [
         {result: validateServiceName(serviceName), field: "CIF"},
-        {result: description(description), field: "description"},
-        {result: customerType(customerType), field: "customerType"}
+        {result: validatedescription(description), field: "description"},
+        {result: validatecustomerType(customerType), field: "customerType"}
     ]
     // Se comprueba si hay errores y se devuelve el mensaje
     for (const {result} of validation) {

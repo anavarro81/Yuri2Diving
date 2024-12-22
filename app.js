@@ -1,6 +1,7 @@
 const  express = require('express');
 const morgan = require('morgan')
 const clienteRoutes = require('./src/routes/clientes.route')
+const servicesRoutes = require('./src/routes/services.route')
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use( (req, res, next)  => {
 })
 
 app.use('/clientes', clienteRoutes)
-app.use(('/servicios/'))
+app.use('/servicios', servicesRoutes)
 
 // Se crea peticion .get de prueba para ver si funciona. 
 app.get('/', (req, res)=> {

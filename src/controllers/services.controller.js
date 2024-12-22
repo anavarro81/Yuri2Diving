@@ -1,5 +1,5 @@
 const Service = require('../models/clientes.model');
-const validateService = require('../utils/validator/validateService');
+const {validateService} = require('../utils/servicesValidator');
 
 const newService = async (req, res) => {
 
@@ -7,7 +7,7 @@ const newService = async (req, res) => {
 
         const  validService  = validateService(req.body);    
         if (validService.error) {
-            return res.status(400).json(validClient);
+            return res.status(400).json(validService);
         }
         
         const newService = new Service(req.body);
@@ -15,7 +15,10 @@ const newService = async (req, res) => {
         return res.status(201).json(serviceCreated);                
     
     } catch (error) {
-        return res.status(500).json(error);
+        console.log('Error al validar el servicio', error);
+        return res.status(500).json({"error": error.message});
     }
 
 }
+
+module.exports = {newService}
