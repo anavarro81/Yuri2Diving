@@ -1,5 +1,5 @@
 const Service = require('../models/services.model');
-
+const {bookin} = require
 const validateServiceName = (serviceName) => {
     
     if (!serviceName) {

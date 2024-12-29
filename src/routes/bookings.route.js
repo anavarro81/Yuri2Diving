@@ -1,5 +1,5 @@
 const Service = require("../models/services.model");
-const {validate}
+
 const newService = async (req, res) => {
     try {
         
