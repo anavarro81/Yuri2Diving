@@ -9,7 +9,7 @@ const bookingSchema = new Schema({
         ref: 'Servicio', 
         required: true 
     },
-    customers: { 
+    customer: { 
         type: Schema.Types.ObjectId, 
         ref: 'User', 
         required: true 
@@ -17,7 +17,7 @@ const bookingSchema = new Schema({
     status: { 
         type: String, 
         default: "pendiente de pago", 
-        enum: ["pendiente", "confirmada", "anulada", "rechazada", "confirmada"] 
+        enum: ["pendiente de pago", "confirmada", "anulada", "rechazada", "confirmada"] 
     },
     requestDate: { type: Date, required: true },
  });

@@ -3,9 +3,9 @@ const morgan = require('morgan')
 const clienteRoutes = require('./src/routes/clientes.route')
 const servicesRoutes = require('./src/routes/services.route')
 const ratesRoutes = require('./src/routes/rates.route')
+const bookingRoutes = require('./src/routes/bookings.route')
 
-const multer = require('multer');
-const AWS = require('aws-sdk');
+
 const app = express();
 
 
@@ -27,7 +27,7 @@ app.use( (req, res, next)  => {
 
 
 app.use('/clientes', clienteRoutes)
-app.use('/reservas', servicesRoutes)
+app.use('/reservas', bookingRoutes)
 app.use('/servicios', servicesRoutes)
 app.use('/tarifas', ratesRoutes)
 app.use('/calendario', servicesRoutes)
