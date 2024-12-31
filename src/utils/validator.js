@@ -1,4 +1,4 @@
-const Cliente = require('../models/clientes.model');
+const Customer = require('../models/customer.model');
 
 
 // ****************************************************** 
@@ -85,7 +85,7 @@ const validatePhone = async (phone) => {
             message: 'phone no valido'}
     }
 
-    const usedPhone = await Cliente.find({phone: phone});
+    const usedPhone = await Customer.find({phone: phone});
 
     
 
@@ -115,7 +115,7 @@ const validateEmail = async (email) => {
             message: 'email no valido'}
     }
 
-    const usedEmail = await Cliente.find({email: email});
+    const usedEmail = await Customer.find({email: email});
 
     if (usedEmail.length > 0) {
         return {
@@ -241,7 +241,7 @@ const validateCIF = (CIF) => {
 
 }
 
-const validateDocument =  (document, ClientType) => {
+const validateDocument =  (document, clientType) => {
     
     if (document.length == 0) {
         return {
@@ -249,7 +249,7 @@ const validateDocument =  (document, ClientType) => {
             message: 'La documentation es obligatoria'}
     }
 
-    switch (ClientType) {
+    switch (clientType) {
         case 'Particular':
             validatePrivateDoc(document);
         case 'Empresa':
@@ -275,7 +275,7 @@ const validateDocument =  (document, ClientType) => {
 
 const validatePrivateCustomer = async (customer) => {
     
-    const {fullName, phone, email, documentation, ClientType} = customer;
+    const {fullName, phone, email, documentation, clientType} = customer;
 
     const ValidfullName = validateFullName(fullName);
     if (ValidfullName.error) {
@@ -292,17 +292,17 @@ const validatePrivateCustomer = async (customer) => {
         return Validemail;
     }
 
-    const document = validateDocument(documentation, ClientType);
+    const document = validateDocument(documentation, clientType);
     if (document.error) {
         return document;
     }
 
-    return {error: false, message: 'Cliente validated'}
+    return {error: false, message: 'Customer validated'}
 }
 
 const validateCompany = async (company) => {
 
-    const {CIF, manager, companyName, phone, email, documentation, ClientType} = company;
+    const {CIF, manager, companyName, phone, email, documentation, clientType} = company;
 
     const validCIF = validateCIF(CIF);
     if (validCIF.error) {
@@ -330,7 +330,7 @@ const validateCompany = async (company) => {
         return Validemail;
     }
 
-    const document = validateDocument(documentation, ClientType);
+    const document = validateDocument(documentation, clientType);
     if (document.error) {
         return document;
     }
@@ -345,11 +345,11 @@ const validateClub = (club) => {
 const validateClient = async (client) => {   
     
     
-    const {ClientType} = client;
+    const {clientType} = client;
 
     let validClient;     
 
-    switch (ClientType) {  
+    switch (clientType) {  
         case 'Particular':
             validClient = validatePrivateCustomer(client);            
             break;

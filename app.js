@@ -1,6 +1,6 @@
 const  express = require('express');
 const morgan = require('morgan')
-const clienteRoutes = require('./src/routes/clientes.route')
+const customerRoutes = require('./src/routes/customers.route')
 const servicesRoutes = require('./src/routes/services.route')
 const ratesRoutes = require('./src/routes/rates.route')
 const bookingRoutes = require('./src/routes/bookings.route')
@@ -26,7 +26,7 @@ app.use( (req, res, next)  => {
 })
 
 
-app.use('/clientes', clienteRoutes)
+app.use('/clientes', customerRoutes)
 app.use('/reservas', bookingRoutes)
 app.use('/servicios', servicesRoutes)
 app.use('/tarifas', ratesRoutes)

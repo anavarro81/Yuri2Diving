@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const clienteSchema = new Schema({
+const customerSchema = new Schema({
     fullName: {type: String},
     
     // Empresas
@@ -13,14 +13,13 @@ const clienteSchema = new Schema({
     email: {type:String},
     documentation: [
         {
-            tipo: {type: String, enum: ['DNI', 'CIF', 'TituloBuceo', 'SeguroBuceo', 'CertificadoActividades'] },
-            url_documento: {type: String},
+            type: {type: String, enum: ['DNI', 'CIF', 'TituloBuceo', 'SeguroBuceo', 'CertificadoActividades'] },
         }
-    ],
+        ],
     validated: {type: Boolean, default: false},
-    ClientType: {type: String, enum: ['Particular', 'Empresa', 'Club']},
+    clientType: {type: String, enum: ['Particular', 'Empresa', 'Club']},
 });
 
 
-const cliente = mongoose.model("Cliente", clienteSchema);
-module.exports = cliente;
+const customer = mongoose.model("Customer", customerSchema);
+module.exports = customer;

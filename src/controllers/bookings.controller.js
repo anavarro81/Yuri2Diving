@@ -3,7 +3,7 @@ const {validateBooking} = require('../utils/bookingsValidator');
 
 const newBooking = async (req, res) => {
     
-    const  validBooking  = validateBooking(req.body);    
+    const  validBooking  = await validateBooking(req.body);    
     
     if (validBooking.error) {
         return res.status(400).json(validBooking);

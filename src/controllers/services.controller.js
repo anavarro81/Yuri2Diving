@@ -1,4 +1,4 @@
-const Service = require('../models/clientes.model');
+const Service = require('../models/services.model');
 const {validateService} = require('../utils/servicesValidator');
 
 const newService = async (req, res) => {
